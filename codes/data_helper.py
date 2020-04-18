@@ -2,6 +2,14 @@ import re
 from langconv import *#繁体字转化为简体字
 
 times = 1#使用第几次数据进行处理
+def Traditional2Simplified(sentence):
+    '''
+    将sentence中的繁体字转为简体字
+    :param sentence: 待转换的句子
+    :return: 将句子中繁体字转换为简体字之后的句子
+    '''
+    sentence = Converter('zh-hans').convert(sentence)
+    return sentence
 
 def clean(path):
     data = pd.read_csv(path, sep='\t', error_bad_lines=False)
@@ -10,11 +18,7 @@ def clean(path):
     cleaned_text = []
     #数据清理
     for string in text:
-        #print("之前:",string)
-        try:
-            string = Traditional2Simplified(string)
-        except:
-            pass
+        string = Traditional2Simplified(string)
         #string = re.sub("\?展开全文c","......",string)
         #string = re.sub("？[？]+","??",string)
         #string = re.sub("\?[\?]+","??",string)
